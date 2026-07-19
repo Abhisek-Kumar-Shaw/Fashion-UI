@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Shivani Mehroliya — Atelier Website
 
-## Getting Started
+A fully static, zero-maintenance luxury one-pager. No backend, no database,
+no forms, no paid services — booking and contact run entirely over WhatsApp,
+phone and email links.
 
-First, run the development server:
+## Updating the site (the only two places you'll ever touch)
+
+**1. Text, phone number, address, hours, Instagram — [`lib/site.ts`](lib/site.ts)**
+
+Every piece of contact info and gallery caption lives in this one file.
+Change a value, rebuild, done. In particular, before going live replace:
+
+- `phone: "+91 00000 00000"` → the real display number
+- `whatsapp: "910000000000"` → real number, digits only, country code first
+- `email`, `instagram`, `maps` → real destinations
+
+**2. Photos — [`public/images/`](public/images/)**
+
+Each look has two photos; to swap a look, replace both files **keeping the
+same filenames**:
+
+- `look-<name>-front.jpg` — the front view, shown in the gallery tiles and hero
+- `look-<name>.jpg` — front + side views side by side, opened when a tile is tapped
+
+Look names, captions and the list of looks live in `lib/site.ts` (`LOOKS`).
+Adding a look = add its two photos + one entry there.
+
+## Running & deploying (free)
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install --legacy-peer-deps   # once
+npm run dev                      # preview at http://localhost:3000
+npm run build                    # emits a static site into ./out
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The `out/` folder is a plain static site — host it for free on Netlify,
+Cloudflare Pages, GitHub Pages, or Vercel. Connect the repo once and every
+push redeploys automatically; there is nothing to renew or pay for.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Design notes
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- Palette: ivory `#FAF9F6` · beige `#F4EFE8` · champagne `#C9A876` · ink `#111111`
+- Type: Cormorant Garamond (display) · Playfair Display (italic accents) · Inter (body)
+- Custom shared CSS classes (`.eyebrow`, `.btn`, `.h-display`, …) are plain
+  (unlayered) CSS in `app/globals.css` — do **not** wrap them in
+  `@layer components`; Tailwind v4 + Turbopack drops layered custom classes.
+# Fashion-UI
