@@ -1,26 +1,298 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* ============================================================
+   SHIVANI MEHROLIYA — Maison Couture
+   Palette · Ivory / Beige / Champagne / Ink
+   Type · Cormorant Garamond / Playfair Display / Inter
+   ============================================================ */
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@theme {
+  --color-ivory: #faf9f6;
+  --color-deep-black: #111111;
+  --color-soft-beige: #f4efe8;
+  --color-champagne-gold: #c9a876;
+  --color-warm-grey: #7b746c;
+  --color-hairline: rgba(17, 17, 17, 0.14);
+  --color-hairline-soft: rgba(17, 17, 17, 0.08);
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+  --color-background: var(--color-ivory);
+  --color-foreground: var(--color-deep-black);
+
+  --font-cormorant: var(--font-cormorant), Georgia, serif;
+  --font-playfair: var(--font-playfair), Georgia, serif;
+  --font-inter: var(--font-inter), "Helvetica Neue", Arial, sans-serif;
+  --font-sans: var(--font-inter), sans-serif;
+
+  --ease-luxe: cubic-bezier(0.22, 1, 0.36, 1);
+
+  --animate-marquee: marquee 46s linear infinite;
+  --animate-kenburns: kenburns 34s ease-in-out infinite alternate;
+  --animate-pulse-ring: pulse-ring 3s cubic-bezier(0.22, 1, 0.36, 1) infinite;
+
+  @keyframes marquee {
+    to {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes kenburns {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.12) translateY(-2%);
+    }
+  }
+
+  @keyframes pulse-ring {
+    0% {
+      transform: scale(0.85);
+      opacity: 0;
+    }
+    40% {
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1.18);
+      opacity: 0;
+    }
   }
 }
 
+html,
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  overflow-x: clip;
+}
+
+body {
+  background-color: var(--color-ivory);
+  color: var(--color-deep-black);
+  font-family: var(--font-inter), sans-serif;
+  font-weight: 300;
+  line-height: 1.75;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::selection {
+  background: var(--color-champagne-gold);
+  color: #ffffff;
+}
+
+:focus-visible {
+  outline: 1.5px solid var(--color-champagne-gold);
+  outline-offset: 4px;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-ivory);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-champagne-gold);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #b5935e;
+}
+
+/* ============================================================
+   Editorial building blocks (shared across sections)
+   ============================================================ */
+.container-site {
+    max-width: 1480px;
+    margin-inline: auto;
+    padding-inline: clamp(1.4rem, 5vw, 5rem);
+  }
+
+  .section-pad {
+    padding-block: clamp(6.5rem, 13vw, 12rem);
+  }
+
+  /* Gold caps label with leading thread */
+  .eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    font-family: var(--font-inter);
+    font-size: 0.6875rem;
+    font-weight: 400;
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
+    color: var(--color-champagne-gold);
+  }
+  .eyebrow::before {
+    content: "";
+    width: 2.75rem;
+    height: 1px;
+    background: var(--color-champagne-gold);
+    flex: none;
+  }
+  .eyebrow.center {
+    justify-content: center;
+  }
+  .eyebrow.center::after {
+    content: "";
+    width: 2.75rem;
+    height: 1px;
+    background: var(--color-champagne-gold);
+    flex: none;
+  }
+
+  .h-display {
+    font-family: var(--font-cormorant);
+    font-weight: 400;
+    font-size: clamp(2.5rem, 5.6vw, 4.75rem);
+    line-height: 1.08;
+    letter-spacing: 0.005em;
+  }
+  .h-display em {
+    font-style: italic;
+    font-weight: 300;
+  }
+
+  .h-sub {
+    font-family: var(--font-playfair);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(1.05rem, 1.6vw, 1.3rem);
+    color: var(--color-warm-grey);
+    line-height: 1.6;
+  }
+
+  .lede {
+    max-width: 34em;
+    color: var(--color-warm-grey);
+    font-size: 0.975rem;
+    line-height: 1.95;
+  }
+
+  .caps {
+    font-size: 0.6875rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-weight: 400;
+  }
+
+  .btn {
+    display: inline-block;
+    padding: 1.05rem 2.7rem;
+    border: 1px solid var(--color-deep-black);
+    font-size: 0.6875rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-weight: 400;
+    cursor: pointer;
+    transition:
+      background 0.5s var(--ease-luxe),
+      color 0.5s var(--ease-luxe),
+      border-color 0.5s var(--ease-luxe);
+  }
+  .btn:hover {
+    background: var(--color-deep-black);
+    color: var(--color-ivory);
+  }
+  .btn.gold {
+    border-color: var(--color-champagne-gold);
+    color: var(--color-champagne-gold);
+  }
+  .btn.gold:hover {
+    background: var(--color-champagne-gold);
+    color: #ffffff;
+  }
+  .btn.light {
+    border-color: rgba(250, 249, 246, 0.5);
+    color: var(--color-ivory);
+  }
+  .btn.light:hover {
+    background: var(--color-ivory);
+    color: var(--color-deep-black);
+    border-color: var(--color-ivory);
+  }
+  .btn.solid {
+    background: var(--color-deep-black);
+    color: var(--color-ivory);
+  }
+  .btn.solid:hover {
+    background: var(--color-champagne-gold);
+    border-color: var(--color-champagne-gold);
+    color: var(--color-deep-black);
+  }
+
+  .link-arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: 0.6875rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-weight: 400;
+    padding-bottom: 0.45rem;
+    border-bottom: 1px solid var(--color-hairline);
+    cursor: pointer;
+    transition:
+      border-color 0.4s var(--ease-luxe),
+      color 0.4s var(--ease-luxe);
+  }
+  .link-arrow svg {
+    width: 16px;
+    height: 10px;
+    transition: transform 0.4s var(--ease-luxe);
+  }
+  .link-arrow:hover {
+    border-color: var(--color-champagne-gold);
+    color: var(--color-champagne-gold);
+  }
+  .link-arrow:hover svg {
+    transform: translateX(6px);
+  }
+
+  /* Hairline underline that grows on hover (nav links) */
+  .nav-underline {
+    position: relative;
+  }
+  .nav-underline::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 1px;
+    width: 0;
+    background: var(--color-champagne-gold);
+    transition: width 0.45s var(--ease-luxe);
+  }
+  .nav-underline:hover::after {
+    width: 100%;
+  }
+
+/* Lenis smooth scrolling */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overflow: clip;
+}
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001s !important;
+  }
 }
